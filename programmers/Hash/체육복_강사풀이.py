@@ -1,8 +1,13 @@
-def solution(participant, completion):
-    d = {}
-    for x in participant:
-        d[x] = d.get(x, 0) + 1
-    for x in completion:
-        d[x] -= 1
-    answer = [k for k,v in d.items() if v >0][0]
-    return answer
+def solution(n,lost, reserve):
+    # 체육복을 빌려야 되는 사람
+    # set을 사용하는 이유 : 집합끼리 연산할 수 있음
+    los = set(lost) - set(reserve)
+    res = set(reserve) - set(lost)
+    
+    for x in res:
+        if x-1 in los:
+            los.remove(x-1)
+        elif x+1 in los:
+            los.remove(x+1)
+    
+    return n-len(los)
